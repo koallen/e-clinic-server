@@ -1,2 +1,2 @@
-# e-clinic-server
+# E-Clinic Backend
 Backend for e-clinic
