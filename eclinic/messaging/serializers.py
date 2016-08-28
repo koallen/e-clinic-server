@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
 from .models import MessageToken
 
 class MessageSerializer(serializers.ModelSerializer):
@@ -13,12 +12,10 @@ class MessageSerializer(serializers.ModelSerializer):
         create a message token for an existing user
         """
         username = validated_data.get('username')
-        token = validated_data.get('token')
         try:
             MessageToken.objects.get(user=username)
         except MessageToken.DoesNotExist:
             return MessageToken.objects.create(**validated_data)
-
         return False
 
     def update(self, instance, validated_data):
@@ -27,4 +24,4 @@ class MessageSerializer(serializers.ModelSerializer):
         """
         instance.token = validated_data.get('token', instance.token)
         instance.save()
-        return True
+        return instance
