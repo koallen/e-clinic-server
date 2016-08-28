@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'user_registration',
     'user_auth',
-    'messaging'
+    'messaging',
+    'clinic.progress',
+    'clinic.reservation',
 ]
 
 MIDDLEWARE = [
