@@ -9,4 +9,4 @@ class ProgressSerializer(serializers.ModelSerializer):
         """
         Create a new progress
         """
-        return MessageToken.objects.create(**validated_data)
+        return Progress.objects.create(**validated_data)
