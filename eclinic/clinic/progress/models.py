@@ -5,4 +5,4 @@ class Progress(models.Model):
     doctor = models.ForeignKey(Doctor)
     patient = models.ForeignKey(Patient)
     content = models.CharField(max_length=500)
-    dateTime = models.DateTimeField()
+    datetime = models.DateTimeField()

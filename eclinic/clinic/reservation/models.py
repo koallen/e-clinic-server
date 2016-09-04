@@ -6,6 +6,6 @@ class Reservation(models.Model):
    """
    Reservation to visit a doctor
    """
-   doctor = models.ForeignKey(Doctor, to_field="user")
-   patient = models.ForeignKey(Patient, to_field="user")
+   doctor = models.ForeignKey(Doctor)
+   patient = models.ForeignKey(Patient)
    datetime = models.DateTimeField()
