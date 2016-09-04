@@ -9,7 +9,7 @@ from .serializers import ReservationSerializer
 
 class ReservationList(APIView):
 
-	def post(self, request, format=None):
+    def post(self, request, format=None):
         """
         create a reservation
         """
@@ -29,8 +29,8 @@ class ReservationList(APIView):
 
 
 class ReservationDetail(APIView):
-	
-	def delete(self, request, id, format=None):
+
+    def delete(self, request, id, format=None):
         """
         delete a reservation
         """
