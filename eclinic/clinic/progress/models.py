@@ -1,9 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User
+from user_registration.models import Doctor, Patient
 
 class Progress(models.Model):
-    doctor = models.ForeignKey(User, to_field="username")
-    patient = models.ForeignKey(User, to_field="username")
+    doctor = models.ForeignKey(Doctor, to_field="user")
+    patient = models.ForeignKey(Patient, to_field="user")
     content = models.CharField(max_length=500)
     dateTime = models.DateTimeField()
-    
