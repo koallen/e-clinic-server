@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from .models import MessageToken
-from .serializers import MessageSerializer
+from .serializers import MessageTokenSerializer
 
 class MessageTokenList(APIView):
 
@@ -11,7 +11,7 @@ class MessageTokenList(APIView):
         """
         create a message token for an existing user
         """
-        serializer = MessageSerializer(data=request.data)
+        serializer = MessageTokenSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -29,8 +29,16 @@ class MessageTokenDetail(APIView):
         update a message token
         """
         messageToken = self.get_object(id)
-        serializer = MessageSerializer(messageToken, data=request.data, partial=True)
+        serializer = MessageTokenSerializer(messageToken, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status = status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class MessageList(APIView):
+
+    def post(self, request, format=None):
+        """
+        Accept message from one user and send it to the destination
+        """
+
