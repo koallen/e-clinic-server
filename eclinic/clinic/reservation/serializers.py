@@ -5,6 +5,5 @@ class ReservationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reservation
 
-
-        def create (self, validated_data):
-            return Reservation.objects.create(**validated_data)
+    def create (self, validated_data):
+        return Reservation.objects.create(**validated_data)
