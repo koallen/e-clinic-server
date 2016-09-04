@@ -131,3 +131,5 @@ REST_FRAMEWORK = {
         "rest_framework.parsers.JSONParser",
     )
 }
+
+FCM_SERVER_KEY = "AIzaSyA8GpMnZlSh_KBUHqkmJHtmsVrdLGQxgGc"

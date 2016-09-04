@@ -3,6 +3,10 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from django.http import Http404
+from django.conf import settings
+
+import requests
+import json
 
 from .models import MessageToken
 from .serializers import MessageTokenSerializer, MessageSerializer
@@ -56,3 +60,13 @@ class MessageList(APIView):
             from_user = serializer.validated_data["from_user"]
             to_user = serializer.validated_data["to_user"]
             message = serializer.validated_data["message"]
+            to_user_token = MessageToken.objects.get(user=to_user).token
+            # prepare message
+            url = "https://fcm.googleapis.com/fcm/send"
+            headers = {"Content-Type": "application/json", "Authorization": "key="+settings.FCM_SERVER_KEY}
+            payload = {"data": {"from_user": from_user, "message": message},
+                       "to": to_user_token}
+            r= requests.post(url, headers=headers, data=json.dumps(payload))
+            print(r.text)
+            return Response(status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

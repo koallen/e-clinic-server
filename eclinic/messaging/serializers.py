@@ -29,5 +29,5 @@ class MessageTokenSerializer(serializers.ModelSerializer):
 class MessageSerializer(serializers.Serializer):
 
     from_user = serializers.CharField()
-    to_user = serializer.CharField()
-    message = serializer.CharField()
+    to_user = serializers.CharField()
+    message = serializers.CharField()
