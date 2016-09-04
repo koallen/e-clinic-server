@@ -7,12 +7,14 @@ from .models import Progress
 
 # Create your views here.
 class ProgressList(APIView):
-    
+
     def get(self, request, format=None):
         """
         Return a list of all progresses.
         """
-        return Response(Progress.objects.all())
+        progresses = Progress.objects.all()
+        serializer = ProgressSerializer(progresses, many=True)
+        return Response(serializer.data)
 
     def post(self, request, format=None):
         """

@@ -5,6 +5,7 @@ from rest_framework import status
 from .serializers import UserRegistrationSerializer
 from .serializers import DoctorRegistrationSerializer
 from .serializers import PatientRegistrationSerializer
+from .models import Doctor
 
 class UserList(APIView):
     """
@@ -23,6 +24,11 @@ class DoctorList(APIView):
     """
     Create a new doctor
     """
+    def get(self, request, format=None):
+        doctors = Doctor.objects.all()
+        serializer = DoctorRegistrationSerializer(doctors, many=True)
+        return Response(serializer.data)
+
     def post(self, request, format=None):
         serializer = DoctorRegistrationSerializer(data=request.data)
         if serializer.is_valid():
