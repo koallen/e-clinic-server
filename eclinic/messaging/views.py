@@ -2,8 +2,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
+from django.http import Http404
+
 from .models import MessageToken
-from .serializers import MessageTokenSerializer
+from .serializers import MessageTokenSerializer, MessageSerializer
 
 class MessageTokenList(APIView):
 
@@ -41,4 +43,8 @@ class MessageList(APIView):
         """
         Accept message from one user and send it to the destination
         """
-
+        serializer = MessageSerializer(data=request.data)
+        if serializer.is_valid():
+            from_user = serializer.validated_data["from_user"]
+            to_user = serializer.validated_data["to_user"]
+            message = serializer.validated_data["message"]

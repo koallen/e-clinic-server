@@ -25,3 +25,9 @@ class MessageTokenSerializer(serializers.ModelSerializer):
         instance.token = validated_data.get('token', instance.token)
         instance.save()
         return instance
+
+class MessageSerializer(serializers.Serializer):
+
+    from_user = serializers.CharField()
+    to_user = serializer.CharField()
+    message = serializer.CharField()
