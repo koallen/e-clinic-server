@@ -6,3 +6,5 @@ venv/
 
 # ignore database
 db.sqlite3
+
+.DS_Store
