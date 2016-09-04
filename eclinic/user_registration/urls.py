@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from .views import UserList
+from .views import UserList, DoctorList, PatientList
 
 urlpatterns = [
     url(r'^users/$', UserList.as_view()),

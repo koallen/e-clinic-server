@@ -12,7 +12,7 @@ class UserRegistrationSerializer(serializers.Serializer):
         """
         return User.objects.create_user(**validated_data)
 
-class PatientRegistrationSerializer(serializers.ModelSerializer){
+class PatientRegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
 
@@ -21,10 +21,10 @@ class PatientRegistrationSerializer(serializers.ModelSerializer){
         Register the user as patient
         """
         return Patient.objects.create(**validated_data)
-}
 
 
-class DoctorRegistrationSerializer(serializers.ModelSerializer){
+
+class DoctorRegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
 
@@ -33,4 +33,4 @@ class DoctorRegistrationSerializer(serializers.ModelSerializer){
         Register the user as doctor
         """
         return Doctor.objects.create(**validated_data)
-}
+
