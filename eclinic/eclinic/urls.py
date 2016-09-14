@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^api/', include('user_auth.urls')),
     url(r'^api/', include('messaging.urls')),
     url(r'^api/', include('clinic.progress.urls')),
-    url(r'^api/', include('clinic.reservation.urls'))
+    url(r'^api/', include('clinic.reservation.urls')),
+    url(r'^docs/', include('rest_framework_docs.urls')),
 ]
