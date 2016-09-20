@@ -28,13 +28,13 @@ class ReservationList(APIView):
         """
         Return a list of all reservations.
         """
-        userId = request.user
+        doctorId = request.query_params.get('doctor', None)
+        patientId = request.query_params.get('patient', None)
         reservations = Reservation.objects.all()
-        if (userId):
-            if userId in Doctor.objects.all()[0]:
-                reservations = reservations.filter(doctor=userId)
-            elif userId in Patient.objects.all()[0]:
-                reservations = reservations.filter(patient=userId) 
+        if (doctorId):
+            reservations = reservations.filter(doctor=doctorId)
+        elif (patientId):
+            reservations = reservations.filter(patient=patientId) 
         serializer = ReservationSerializer(reservations, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
