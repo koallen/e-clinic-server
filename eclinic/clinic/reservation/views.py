@@ -6,6 +6,7 @@ from django.http import Http404
 
 from .models import Reservation
 from .serializers import ReservationSerializer
+from user_registration.models import Doctor, Patient
 
 # Create your views here.
 
@@ -15,6 +16,7 @@ class ReservationList(APIView):
         """
         create a reservation
         """
+
         serializer = ReservationSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -26,7 +28,13 @@ class ReservationList(APIView):
         """
         Return a list of all reservations.
         """
+        userId = request.user
         reservations = Reservation.objects.all()
+        if (userId):
+            if userId in Doctor.objects.all()[0]:
+                reservations = reservations.filter(doctor=userId)
+            elif userId in Patient.objects.all()[0]:
+                reservations = reservations.filter(patient=userId) 
         serializer = ReservationSerializer(reservations, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
