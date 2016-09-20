@@ -7,12 +7,17 @@ from .models import Progress
 
 # Create your views here.
 class ProgressList(APIView):
-
+    serializer_class = ProgressSerializer;
     def get(self, request, format=None):
         """
         Return a list of all progresses.
         """
+        doctorId = request.query_params.get('doctor', None)
+        patientId = request.query_params.get('patient', None)
         progresses = Progress.objects.all()
+        if (doctorId is not None) and (patientId is not None):
+            progresses = progresses.filter(doctor=doctorId)
+            progresses = progresses.filter(patient=patientId)
         serializer = ProgressSerializer(progresses, many=True)
         return Response(serializer.data)
 
@@ -25,4 +30,7 @@ class ProgressList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
 
