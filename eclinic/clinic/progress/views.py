@@ -16,8 +16,8 @@ class ProgressList(APIView):
         patientId = request.query_params.get('patient', None)
         progresses = Progress.objects.all()
         if (doctorId is not None) and (patientId is not None):
-            progresses = progresses.filter(doctor=doctorId)
-            progresses = progresses.filter(patient=patientId)
+            progresses = progresses.filter(doctor__user=doctorId)
+            progresses = progresses.filter(patient__user=patientId)
         serializer = ProgressSerializer(progresses, many=True)
         return Response(serializer.data)
 

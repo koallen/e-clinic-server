@@ -33,4 +33,3 @@ class DoctorRegistrationSerializer(serializers.ModelSerializer):
         Register the user as doctor
         """
         return Doctor.objects.create(**validated_data)
-

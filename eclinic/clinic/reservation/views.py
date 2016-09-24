@@ -32,9 +32,9 @@ class ReservationList(APIView):
         patientId = request.query_params.get('patient', None)
         reservations = Reservation.objects.all()
         if (doctorId):
-            reservations = reservations.filter(doctor=doctorId)
+            reservations = reservations.filter(doctor__user=doctorId)
         elif (patientId):
-            reservations = reservations.filter(patient=patientId) 
+            reservations = reservations.filter(patient__user=patientId)
         serializer = ReservationSerializer(reservations, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
