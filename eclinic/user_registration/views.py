@@ -25,7 +25,10 @@ class DoctorList(APIView):
     Create a new doctor
     """
     def get(self, request, format=None):
+        doctor_name = request.query_params.get("user", None)
         doctors = Doctor.objects.all()
+        if (doctor_name is not None):
+            doctors = doctors.filter(user=doctor_name)
         serializer = DoctorRegistrationSerializer(doctors, many=True)
         return Response(serializer.data)
 
