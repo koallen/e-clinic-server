@@ -4,6 +4,7 @@ from rest_framework import status
 
 from django.http import Http404
 from django.conf import settings
+from django.contrib.auth.models import User
 
 import requests
 import json
@@ -25,7 +26,8 @@ class MessageTokenList(APIView):
                 current_token.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
             except MessageToken.DoesNotExist:
-                serializer.save()
+                new_token = MessageToken(user=User.objects.get(username=serializer.validated_data["user"]), token=serializer.validated_data["token"])
+                new_token.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
