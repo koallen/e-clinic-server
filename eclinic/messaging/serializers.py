@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import MessageToken
 
 class MessageTokenSerializer(serializers.ModelSerializer):
+    user = serializers.CharField()
 
     class Meta:
         model = MessageToken

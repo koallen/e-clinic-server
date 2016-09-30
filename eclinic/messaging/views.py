@@ -19,8 +19,14 @@ class MessageTokenList(APIView):
         """
         serializer = MessageTokenSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            try:
+                current_token = MessageToken.objects.get(user=serializer.validated_data["user"])
+                current_token.token = serializer.validated_data["token"]
+                current_token.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            except MessageToken.DoesNotExist:
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class MessageTokenDetail(APIView):
@@ -61,12 +67,13 @@ class MessageList(APIView):
             to_user = serializer.validated_data["to_user"]
             message = serializer.validated_data["message"]
             to_user_token = MessageToken.objects.get(user=to_user).token
+            print("token: " + to_user_token)
             # prepare message
             url = "https://fcm.googleapis.com/fcm/send"
             headers = {"Content-Type": "application/json", "Authorization": "key="+settings.FCM_SERVER_KEY}
             payload = {"data": {"from_user": from_user, "message": message},
                        "to": to_user_token}
-            r= requests.post(url, headers=headers, data=json.dumps(payload))
+            r = requests.post(url, headers=headers, data=json.dumps(payload))
             print(r.text)
             return Response(status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
