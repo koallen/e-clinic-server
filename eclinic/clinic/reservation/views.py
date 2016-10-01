@@ -5,7 +5,7 @@ from rest_framework import status
 from django.http import Http404
 
 from .models import Reservation
-from .serializers import ReservationSerializer
+from .serializers import ReservationSerializer, ReservationPostSerializer
 from user_registration.models import Doctor, Patient
 
 # Create your views here.
@@ -17,10 +17,10 @@ class ReservationList(APIView):
         create a reservation
         """
 
-        serializer = ReservationSerializer(data=request.data)
+        serializer = ReservationPostSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
