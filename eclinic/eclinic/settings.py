@@ -113,13 +113,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Singapore'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -130,7 +130,9 @@ STATIC_URL = '/static/'
 REST_FRAMEWORK = {
     "DEFAULT_PARSER_CLASSES": (
         "rest_framework.parsers.JSONParser",
-    )
+    ),
+    "DATETIME_FORMAT": "%Y-%m-%d %H:%M",
+    "DATETIME_INPUT_FORMATS": ["%Y-%m-%d %H:%M"]
 }
 
 FCM_SERVER_KEY = "AIzaSyA8GpMnZlSh_KBUHqkmJHtmsVrdLGQxgGc"
