@@ -28,15 +28,14 @@ class ReservationList(APIView):
         """
         Return a list of all reservations.
         """
-        doctorId = request.query_params.get('doctor', None)
-        patientId = request.query_params.get('patient', None)
-        reservations = Reservation.objects.all()
-        if (doctorId):
-            reservations = reservations.filter(doctor__user=doctorId)
-        elif (patientId):
-            reservations = reservations.filter(patient__user=patientId)
-        serializer = ReservationSerializer(reservations, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        username = request.query_params.get('user', None)
+        if username is not None:
+            reservations = Reservation.objects.filter(doctor__user=username).order_by("datetime")
+            if len(reservations) == 0:
+                reservations = Reservation.objects.filter(patient__user=username).order_by("datetime")
+            serializer = ReservationSerializer(reservations, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class ReservationDetail(APIView):
